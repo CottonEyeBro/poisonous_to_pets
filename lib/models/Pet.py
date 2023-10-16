@@ -1,4 +1,5 @@
 from models.__init__ import CURSOR, CONN
+from models.Owner import Owner
 
 class Pet:
 
@@ -35,3 +36,12 @@ class Pet:
             self._species = species
         else:
             raise Exception
+    
+    def remove_pet(self):
+        pass
+
+    def update_pet(self):
+        pass
+
+    # def view_pet(self):
+    #     print(f"Say 'Hello!' to {self.name}:\nSpecies: {self.species}\nOwner: {self.owner}\nSafe Foods: {self.safe_foods}\nUnsafe Foods: {self.unsafe_foods}\n")
