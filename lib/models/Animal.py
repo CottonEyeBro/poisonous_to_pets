@@ -1,13 +1,13 @@
 from models.__init__ import CURSOR, CONN
 
-class Food:
+class Animal:
 
     all = {}
 
     def __init__(self, name, id = None):
         self.id = id
         self.name = name
-
+        
     @property
     def name(self):
         return self._name
@@ -21,9 +21,9 @@ class Food:
     
     @classmethod
     def create_table(cls):
-        """ Create a new table to persist the attributes of Food instances """
+        """ Create a new table to persist the attributes of Animal instances """
         sql = """
-            CREATE TABLE IF NOT EXISTS foods (
+            CREATE TABLE IF NOT EXISTS animals (
             id INTEGER PRIMARY KEY,
             name TEXT)
         """
@@ -32,19 +32,19 @@ class Food:
 
     @classmethod
     def drop_table(cls):
-        """ Drop the table that persists Food instances """
+        """ Drop the table that persists Animal instances """
         sql = """
-            DROP TABLE IF EXISTS foods;
+            DROP TABLE IF EXISTS animals;
         """
         CURSOR.execute(sql)
         CONN.commit()
 
     def save(self):
-        """ Insert a new row with the name value of the current Food instance.
+        """ Insert a new row with the name value of the current Animal instance.
         Update object id attribute using the primary key value of new row.
         Save the object in local dictionary using table row's PK as dictionary key"""
         sql = """
-            INSERT INTO foods (name)
+            INSERT INTO animals (name)
             VALUES (?)
         """
 
@@ -56,7 +56,7 @@ class Food:
 
     @classmethod
     def create(cls, name):
-        """ Initialize a new Food instance and save the object to the database """
-        food = cls(name)
-        food.save()
-        return food
+        """ Initialize a new Animal instance and save the object to the database """
+        animal = cls(name)
+        animal.save()
+        return animal
