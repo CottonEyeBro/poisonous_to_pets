@@ -61,10 +61,14 @@ class Animal:
         return animal
     
     @classmethod
-    def delete_animal(cls, animal_name):
+    def delete_animal(cls, name):
+        sql = """
+            DELETE FROM animals
+            WHERE name = ?
+        """
 
-        CURSOR.execute("DELETE FROM animals WHERE name = ?", (animal_name,))
+        CURSOR.execute(sql, (name,))
         CONN.commit()
-        print(f"Animal with ID {animal_name} deleted successfully")
+        print(f"{name} deleted successfully")
 
         CONN.close()
