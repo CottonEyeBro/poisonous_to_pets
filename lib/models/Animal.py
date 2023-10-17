@@ -1,5 +1,4 @@
 from models.__init__ import CURSOR, CONN
-
 class Animal:
 
     all = {}
@@ -60,3 +59,12 @@ class Animal:
         animal = cls(name)
         animal.save()
         return animal
+    
+    @classmethod
+    def delete_animal(cls, animal_name):
+
+        CURSOR.execute("DELETE FROM animals WHERE name = ?", (animal_name,))
+        CONN.commit()
+        print(f"Animal with ID {animal_name} deleted successfully")
+
+        CONN.close()
