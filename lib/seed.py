@@ -46,5 +46,8 @@ def seed_database():
     sweet_potatoes = Food.create("sweet potatoes")
 
     dog_chocolate = AnimalFood.create(dog.id, chocolate.id, "false")
+    dog_sweet_potatoes = AnimalFood.create(dog.id, sweet_potatoes.id, "true")
+    cat_chocolate = AnimalFood.create(cat.id, chocolate.id, "false")
+    cat_sweet_potatoes = AnimalFood.create(cat.id, sweet_potatoes.id, "false")
 
 seed_database()

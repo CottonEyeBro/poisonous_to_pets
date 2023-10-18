@@ -59,31 +59,34 @@ class Animal:
         animal = cls(name)
         animal.save()
         return animal
-    
-    # @classmethod
-    # def delete_animal(cls, name):
-    #     sql = """
-    #         DELETE FROM animals
-    #         WHERE name = ?
-    #     """
 
-    #     CURSOR.execute(sql, (name,))
-    #     CONN.commit()
-    #     print(f"{name} deleted successfully")
 
-    #     CONN.close()
+    ### DELETE ###
 
-    # @classmethod
-    # def find_by_id(cls, id):
-    #     """Return a Department object corresponding to the table row matching the specified primary key"""
-    #     sql = """
-    #         SELECT *
-    #         FROM departments
-    #         WHERE id = ?
-    #     """
+    def animal_foods_ids(self):
+        """Return list of animals_foods associated with current animal"""
+        from models.AnimalFood import AnimalFood
+        sql = """
+            SELECT id FROM animals_foods
+            WHERE fk_animal = ?
+        """
+        CURSOR.execute(sql, (self.id,),)
 
-    #     row = CURSOR.execute(sql, (id,)).fetchone()
-    #     return cls.instance_from_db(row) if row else None
+        rows = CURSOR.fetchall()
+        ids = []
+        for tupl in rows:
+            ids.append(tupl[0])
+        return ids
+
+    def delete_animal_foods(self, id):
+        """Delete each row where an animal occurs in the AnimalsFoods table"""
+        sql = """
+            DELETE FROM animals_foods
+            WHERE id = ?
+        """
+        CURSOR.execute(sql, (id,))
+        CONN.commit()
+        #AnimalFoods dictionary is not updated by this
 
     @classmethod
     def instance_from_db(cls, row):
@@ -109,7 +112,6 @@ class Animal:
             FROM animals
             WHERE name is ?
         """
-
         row = CURSOR.execute(sql, (name,)).fetchone()
         return cls.instance_from_db(row) if row else None
 
@@ -121,12 +123,14 @@ class Animal:
             DELETE FROM animals
             WHERE id = ?
         """
-        
         CURSOR.execute(sql, (self.id,))
         CONN.commit()
 
         # Delete the dictionary entry using id as the key
         del type(self).all[self.id]
+
+        # from AnimalFood import update_dictionary
+        # update_dictionary()
 
         # Set the id to None
         self.id = None

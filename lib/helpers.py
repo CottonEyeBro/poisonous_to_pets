@@ -10,9 +10,13 @@ def delete_animal():
     animal = Animal.find_by_name(name)
     id = animal.id
 
+    ids = animal.animal_foods_ids()
+    print(ids)
+    for id in ids:
+        animal.delete_animal_foods(id)
+
     animal.delete(id)
     print(f"{name} deleted from the animal database")
-    #need to delete dog related items from the animals_food database 
 
 def exit_program():
     print("Goodbye!")
