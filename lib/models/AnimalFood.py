@@ -68,26 +68,39 @@ class AnimalFood:
         animal_food.save()
         return animal_food
 
+    @classmethod
+    def instance_from_db(cls, row):
+        """Return an AnimalFood object having the attribute values from the table row."""
+
+        # Check the dictionary for an existing instance using the row's primary key
+        animal_food = cls.all.get(row[1])
+        if animal_food:
+            # ensure attributes match row values in case local instance was modified
+            animal_food.is_safe = row[0]
+            animal_food.fk_animal = row[2]
+            animal_food.fk_food = row[3]
+        else:
+            print("animal not found")
+        return animal_food
+
+    @classmethod
+    def find_by_id(cls, id):
+        """Return a AnimalFood object corresponding to the table row matching the specified primary key"""
+        sql = """
+            SELECT id
+            FROM animals_foods
+            WHERE id = ?
+        """
+
+        row = CURSOR.execute(sql, (id,)).fetchone()
+        return cls.instance_from_db(row) if row else None
+
     # @classmethod
     # def update_dictionary():
 
     
 
-    # @classmethod
-    # def instance_from_db(cls, row):
-    #     """Return an Animal object having the attribute values from the table row."""
 
-    #     # Check the dictionary for an existing instance using the row's primary key
-    #     animal = cls.all.get(row[0])
-    #     if animal:
-    #         # ensure attributes match row values in case local instance was modified
-    #         animal.name = row[1]
-    #     else:
-    #         # not in dictionary, create new instance and add to dictionary
-    #         animal = cls(row[1])
-    #         animal.id = row[0]
-    #         cls.all[animal.id] = animal
-    #     return animal
 
     # @classmethod
     # def find_by_name(cls, name):
@@ -100,23 +113,11 @@ class AnimalFood:
     #     row = CURSOR.execute(sql, (name,)).fetchone()
     #     return cls.instance_from_db(row) if row else None
 
-    # def delete(self, id):
-    #     """Delete the table row corresponding to the current Animal instance,
-    #     delete the dictionary entry, and reassign id attribute"""
+    def delete_dictionary_entry(self, id):
+        """Delete the dictionary entry corresponding to the current animal_food instance, and reassign id attribute"""
 
-    #     sql = """
-    #         DELETE FROM animals
-    #         WHERE id = ?
-    #     """
-    #     CURSOR.execute(sql, (self.id,))
-    #     CONN.commit()
+        # Delete the dictionary entry using id as the key
+        del type(self).all[self.id]
 
-    #     sql = """
-    #         DELETE FROM animals_foods
-    #         WHERE id
-    #     """
-    #     # Delete the dictionary entry using id as the key
-    #     del type(self).all[self.id]
-
-    #     # Set the id to None
-    #     self.id = None
+        # Set the id to None
+        self.id = None

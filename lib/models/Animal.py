@@ -86,7 +86,6 @@ class Animal:
         """
         CURSOR.execute(sql, (id,))
         CONN.commit()
-        #AnimalFoods dictionary is not updated by this
 
     @classmethod
     def instance_from_db(cls, row):

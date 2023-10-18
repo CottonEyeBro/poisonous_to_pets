@@ -1,5 +1,7 @@
 # lib/helpers.py
 from models.Animal import Animal
+from models.AnimalFood import AnimalFood
+print(AnimalFood.all)
 
 def helper_1():
     print("Performing useful function#1.")
@@ -11,8 +13,9 @@ def delete_animal():
     id = animal.id
 
     ids = animal.animal_foods_ids()
-    print(ids)
+    print(AnimalFood.all)
     for id in ids:
+        # del AnimalFood.all[id]
         animal.delete_animal_foods(id)
 
     animal.delete(id)
