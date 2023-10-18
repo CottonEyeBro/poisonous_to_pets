@@ -6,7 +6,8 @@ from helpers import (
     delete_animal,
     create_animal,
     list_foods,
-    list_animals
+    list_animals,
+    update_animal_name
 )
 
 def main():
@@ -25,6 +26,8 @@ def main():
             list_foods()
         elif choice == "4":
             list_animals()
+        elif choice == "5":
+            update_animal_name()
         else:
             print("Invalid choice")
 
@@ -35,6 +38,7 @@ def menu():
     print("2. Delete animal")
     print("3. List all currently supported foods from database")
     print("4. List all currently supported animals from database")
+    print("5. Update an animal's name")
 
 if __name__ == "__main__":
     main()

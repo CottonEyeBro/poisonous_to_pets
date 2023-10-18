@@ -46,3 +46,12 @@ def list_animals():
     for animal in animals:
         print(animal.name)
 
+def update_animal_name():
+    current_name = input("Type the animal whose name you wish to change: ")
+    animal = Animal.find_by_name(current_name)
+    if not animal:
+        print(f"Animal '{current_name}' not found")
+        return
+    new_name = input("Type the new name you wish to save: ")
+    animal.update(new_name)
+    print(f"The name of animal '{current_name} has been updated to '{new_name}")

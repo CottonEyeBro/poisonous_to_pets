@@ -21,4 +21,3 @@ chocolate = Food.create("chocolate")
 sweet_potatoes = Food.create("sweet potatoes")
 
 dog_chocolate = AnimalFood.create(dog.id, chocolate.id, "false")
-
