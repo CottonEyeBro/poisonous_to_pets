@@ -60,3 +60,44 @@ class Food:
         food = cls(name)
         food.save()
         return food
+    
+    # Get all supported food function
+    @classmethod
+    def instance_from_db(cls, row):
+        """Return a Food object having the attribute values from the table row."""
+
+        # Check the dictionary for an existing instance using the row's primary key
+        food = cls.all.get(row[0])
+        if food:
+            # ensure attributes match row values in case local instance was modified
+            food.name = row[1]
+        else:
+            # not in dictionary, create new instance and add to dictionary
+            food = cls(row[1])
+            food.id = row[0]
+            cls.all[food.id] = food
+        return food
+    
+    @classmethod
+    def find_by_name(cls, name):
+        """Return a Food object corresponding to first table row matching specified name"""
+        sql = """
+            SELECT *
+            FROM foods
+            WHERE name is ?
+        """
+
+        row = CURSOR.execute(sql, (name,)).fetchone()
+        return cls.instance_from_db(row) if row else None
+    
+    @classmethod
+    def get_all_food(cls):
+        """Return a list containing a Food object per row in the table"""
+        sql = """
+            SELECT *
+            FROM foods
+        """
+
+        rows = CURSOR.execute(sql).fetchall()
+
+        return [cls.instance_from_db(row) for row in rows]

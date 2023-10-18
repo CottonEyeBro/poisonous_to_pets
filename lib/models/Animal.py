@@ -134,4 +134,16 @@ class Animal:
         # Set the id to None
         self.id = None
     
+    @classmethod
+    def get_all_animal(cls):
+        """Return a list containing a Animal object per row in the table"""
+        sql = """
+            SELECT *
+            FROM animals
+        """
 
+        rows = CURSOR.execute(sql).fetchall()
+
+        return [cls.instance_from_db(row) for row in rows]
+
+    
