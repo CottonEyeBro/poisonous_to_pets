@@ -83,12 +83,18 @@ def seed_database():
     cat_butter = AnimalFood.create(cat.id, cat_butter.id, "false")
     cat_nutmeg = AnimalFood.create(cat.id, cat_nutmeg.id, "false")
     cat_onion = AnimalFood.create(cat.id, cat_onion.id, "false")
-    cat_liver = AnimalFood.create(cat.id, cat_liver.id, "false")
-    cat_salt = AnimalFood.create(cat.id, cat_salt.id, "false")
+    cat_citrus = AnimalFood.create(cat.id, cat_citrus.id, "false")
+    cat_corn = AnimalFood.create(cat.id, cat_corn.id, "false")
+    cat_peanuts = AnimalFood.create(cat.id, cat_peanuts.id, "false")
+    cat_apple_seeds = AnimalFood.create(cat.id, cat_apple_seeds.id, "false")
+    cat_bread = AnimalFood.create(cat.id, cat_bread.id, "false")
+    cat_watermelon = AnimalFood.create(cat.id, cat_watermelon.id, "false")
+    cat_carrot = AnimalFood.create(cat.id, cat_carrot.id, "false")
+    cat_salt = AnimalFood.create(cat.id, cat_salt.id, "true")
     cat_dairy = AnimalFood.create(cat.id, cat_dairy.id, "false")
-    cat_non_toxic_mushrooms = AnimalFood.create(cat.id, cat_non_toxic_mushrooms.id, "false")
-    cat_pumpkin = AnimalFood.create(cat.id, cat_pumpkin.id, "false")
-    cat_broccoli = AnimalFood.create(cat.id, cat_broccoli.id, "false")
+    cat_non_toxic_mushrooms = AnimalFood.create(cat.id, cat_non_toxic_mushrooms.id, "true")
+    cat_pumpkin = AnimalFood.create(cat.id, cat_pumpkin.id, "true")
+    cat_broccoli = AnimalFood.create(cat.id, cat_broccoli.id, "true")
 
 
 
