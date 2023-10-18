@@ -145,5 +145,16 @@ class Animal:
         rows = CURSOR.execute(sql).fetchall()
 
         return [cls.instance_from_db(row) for row in rows]
+    
+    def update(self, new_name):
+        """Update the name of the current Animal."""
+        sql = """
+            UPDATE animals
+            SET name = ?
+            WHERE id = ?
+        """
+
+        CURSOR.execute(sql, (new_name, self.id))
+        CONN.commit()
 
     
