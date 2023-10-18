@@ -14,11 +14,12 @@ def delete_animal():
     ids = animal.animal_foods_ids()
     print(AnimalFood.all)
     for id in ids:
-        # del AnimalFood.all[id]
+        del AnimalFood.all[id]
         animal.delete_animal_foods(id)
 
     animal.delete(id)
-    print(f"{name} deleted from the animal database")
+    print(f"{name} deleted from the database")
+    print(AnimalFood.all)
 
 def exit_program():
     print("Goodbye!")

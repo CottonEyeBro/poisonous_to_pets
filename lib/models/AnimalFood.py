@@ -60,6 +60,7 @@ class AnimalFood:
 
         self.id = CURSOR.lastrowid
         type(self).all[self.id] = self
+        # print(AnimalFood.all)
 
     @classmethod
     def create(cls, fk_animal, fk_food, is_safe):

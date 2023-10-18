@@ -1,4 +1,5 @@
 # lib/cli.py
+from seed import Animal, AnimalFood, Food
 
 from helpers import (
     exit_program,
@@ -6,9 +7,10 @@ from helpers import (
     delete_animal
 )
 
-
 def main():
     while True:
+        # from models.AnimalFood import AnimalFood
+        # print(AnimalFood.all)
         menu()
         choice = input("> ")
         if choice == "0":
@@ -19,7 +21,6 @@ def main():
             delete_animal()
         else:
             print("Invalid choice")
-
 
 def menu():
     print("Please select an option:")

@@ -50,11 +50,12 @@ def seed_database():
     cat_chocolate = AnimalFood.create(cat.id, chocolate.id, "false")
     cat_sweet_potatoes = AnimalFood.create(cat.id, sweet_potatoes.id, "false")
 
-    dictionary = AnimalFood.all
-    print(dictionary)
-    id = 1
-    del dictionary[id]
-    print(dictionary)
+    # dictionary = AnimalFood.all
+    # print(dictionary)
+    # id = 1
+    # del dictionary[id]
+    # print(dictionary)
+    # print(AnimalFood.all)
 
 
 seed_database()
