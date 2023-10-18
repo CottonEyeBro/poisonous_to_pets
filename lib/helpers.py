@@ -1,7 +1,6 @@
 # lib/helpers.py
 from models.Animal import Animal
 from models.AnimalFood import AnimalFood
-print(AnimalFood.all)
 
 def helper_1():
     print("Performing useful function#1.")
