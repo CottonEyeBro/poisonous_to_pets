@@ -20,6 +20,37 @@ class AnimalFood:
     #         self._name = name
     #     else:
     #         raise Exception
+
+    @property
+    def fk_animal(self):
+        return self._fk_animal
+    
+    @fk_animal.setter
+    def fk_animal(self, fk_animal):
+        if isinstance(fk_animal, int) and 0 <= fk_animal:
+            self._fk_animal = fk_animal
+        else:
+            raise Exception
+        
+    @property
+    def fk_food(self):
+        return self._fk_food
+    
+    @fk_food.setter
+    def fk_food(self, fk_food):
+        if isinstance(fk_food, int) and 0 <= fk_food:
+            self._fk_food = fk_food
+        else:
+            raise Exception
+        
+    @property
+    def is_safe(self):
+        return self._is_safe
+    
+    @is_safe.setter
+    def is_safe(self, is_safe):
+        if isinstance(is_safe, str) and (is_safe == "true" or is_safe == "false"):
+            self._is_safe = is_safe
     
     @classmethod
     def create_table(cls):

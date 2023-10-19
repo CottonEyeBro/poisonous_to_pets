@@ -1,8 +1,6 @@
 # lib/cli.py
 from seed import Animal, AnimalFood, Food
-
-
-
+from figures import main_menu_img
 from helpers import (
     exit_program,
     delete_animal,
@@ -10,10 +8,12 @@ from helpers import (
     list_foods,
     list_animals, 
     unsafe_foods_for_animal,
-    update_animal_name
+    update_animal_name,
+    web_md
 )
 
 def main():
+    main_menu_img()
     while True:
         # from models.AnimalFood import AnimalFood
         # print(AnimalFood.all)
@@ -33,6 +33,8 @@ def main():
             list_animals()
         elif choice == "6":
             unsafe_foods_for_animal()
+        elif choice == "7":
+            web_md()
         else:
             print("----------------\n <!> Invalid choice <!> \n----------------")
 
@@ -45,6 +47,7 @@ def menu():
     print("4. List all currently supported foods from database")
     print("5. List all currently supported animals from database")
     print("6. List all unsafe foods for an animal")
+    print("7. Check WebMD")
 
 if __name__ == "__main__":
     main()

@@ -2,6 +2,7 @@
 from models.Animal import Animal
 from models.AnimalFood import AnimalFood
 from models.Food import Food
+from figures import web_m_dumper
 
 
 
@@ -15,7 +16,7 @@ from models.Food import Food
 
 
 def exit_program():
-    print("You have now exited the program")
+    print("\n\nYou have now exited the program")
     print("---------- Goodbye! ----------\n\n")
     exit()
 
@@ -304,3 +305,13 @@ def unsafe_foods_for_animal():
 # --------------------------------------------------------------
 # Below is the helper to SHOW WEBMD RESULTS
 # --------------------------------------------------------------
+
+
+# WebMD results
+def web_md():
+    response = input("Are you sure that you would like to check WebMD? [yes/no]")
+    if response == "yes":
+        print("BeeYoop BeeDeepBoom Weeop DEEpaEEya... It's probably cancer.\n")
+        return web_m_dumper()
+    else:
+        return
