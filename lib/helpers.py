@@ -64,9 +64,9 @@ def create_animal():
         # here is the break that ends the process if done
         if food_name == 'done' or not food_name:
             
-            done_setup = input(f"Are you sure you're done setting up '{name}'? (yes/no): ").strip().lower()
+            done_setup = input(f"------------------------------------------------------------\nAre you sure you're done setting up '{name}'? (yes/no): \n------------------------------------------------------------\nResponse: ").strip().lower()
             if done_setup == 'yes':
-                print(f"\nAnimal '{animal.name.capitalize()}' setup is complete.")
+                print(f"\n---------------------------------------\nAnimal '{animal.name.capitalize()}' setup is complete.\n---------------------------------------")
                 break
         elif food_name == 'no':
             print(f"Setup for '{name}' continues. Add more foods.")
@@ -92,7 +92,7 @@ def create_animal():
                 else:
                     AnimalFood.create(animal.id, food.id, is_safe) # here is the creation
                     selected_foods.add(food.id) # heres where we add it
-                    print(f"\n'{food.name}' added to '{animal.name}' as {'safe' if is_safe == 'true' else 'unsafe'} food.") # my happy confirmed message
+                    print(f"\n------------------------------------------------------------------------------\n'{food.name}' added to '{animal.name}' as {'safe' if is_safe == 'true' else 'unsafe'} food.\n------------------------------------------------------------------------------") # my happy confirmed message
 
    
 
