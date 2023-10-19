@@ -46,3 +46,59 @@ def list_animals():
     for animal in animals:
         print(animal.name)
 
+def update_animal_name():
+    current_name = input("Type the animal whose name you wish to change: ")
+    animal = Animal.find_by_name(current_name)
+    if not animal:
+        print(f"Animal '{current_name}' not found")
+        return
+    new_name = input("Type the new name you wish to save: ")
+    animal.update(new_name)
+    print(f"The name of animal '{current_name} has been updated to '{new_name}")
+
+def unsafe_foods_for_animal():
+    #ask for a species
+    animal_name = input("Which animal would you like to check: ")
+    # print(animal_name)
+
+    #get the id of the species from animal table
+    animal = Animal.find_by_name(animal_name)
+    print(animal)
+    if not animal:
+        print(f"Animal '{current_name}' not found")
+        return
+    
+    #get all animal_foods ids for that animal
+    all_ids = animal.animal_foods_ids() #returns a list of ids
+    # print(all_ids)
+
+    #get all fk_foods ids where isSafe == false
+    unsafe = []
+    for id in all_ids:
+        animal_food = AnimalFood.find_unsafe_by_id(id)
+        if animal_food != None:
+            unsafe.append(animal_food)
+    # print(unsafe)
+
+    #iterate through AnimalFood objects and return a list of their fk_food values
+    fk_food_values = []
+    for af_object in unsafe:
+        fk = af_object.fk_food
+        fk_food_values.append(fk)
+    # print(fk_food_values)
+
+    #iterate over list to return foods table names for each id
+    food_names = []
+    for id in fk_food_values:
+        food_obj = Food.find_by_id(id)
+        name = food_obj.name
+        food_names.append(name)
+    # print(food_names)
+
+    #alphabetize the names
+    sorted_names = sorted(food_names)
+
+    #print the names
+    print(f"Unsafe Foods for '{animal_name}:")
+    for name in sorted_names:
+        print(name)

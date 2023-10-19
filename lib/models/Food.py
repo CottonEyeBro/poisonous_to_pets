@@ -77,6 +77,18 @@ class Food:
             food.id = row[0]
             cls.all[food.id] = food
         return food
+
+    @classmethod
+    def find_by_id(cls, id):
+        """Return a Food object corresponding to the table row matching the specified primary key"""
+        sql = """
+            SELECT *
+            FROM foods
+            WHERE id = ?
+        """
+
+        row = CURSOR.execute(sql, (id,)).fetchone()
+        return cls.instance_from_db(row) if row else None
     
     @classmethod
     def find_by_name(cls, name):
@@ -99,5 +111,4 @@ class Food:
         """
 
         rows = CURSOR.execute(sql).fetchall()
-
         return [cls.instance_from_db(row) for row in rows]

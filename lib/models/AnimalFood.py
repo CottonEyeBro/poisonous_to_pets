@@ -96,24 +96,6 @@ class AnimalFood:
         row = CURSOR.execute(sql, (id,)).fetchone()
         return cls.instance_from_db(row) if row else None
 
-    # @classmethod
-    # def update_dictionary():
-
-    
-
-
-
-    # @classmethod
-    # def find_by_name(cls, name):
-    #     """Return an Animal object corresponding to first table row matching specified name"""
-    #     sql = """
-    #         SELECT *
-    #         FROM animals
-    #         WHERE name is ?
-    #     """
-    #     row = CURSOR.execute(sql, (name,)).fetchone()
-    #     return cls.instance_from_db(row) if row else None
-
     def delete_dictionary_entry(self, id):
         """Delete the dictionary entry corresponding to the current animal_food instance, and reassign id attribute"""
 
@@ -122,3 +104,15 @@ class AnimalFood:
 
         # Set the id to None
         self.id = None
+
+    @classmethod
+    def find_unsafe_by_id(cls, id):
+        """Returns id of AnimalFood object if it is unsafe to eat"""
+        sql = """
+            SELECT * FROM animals_foods
+            WHERE id = ?
+            AND is_safe = "false"
+        """
+
+        row = CURSOR.execute(sql, (id,)).fetchone()
+        return cls.instance_from_db(row) if row else None
