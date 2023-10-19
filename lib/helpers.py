@@ -51,7 +51,7 @@ def create_animal():
     animal = Animal.create(name)
     print(f"--------------------------------------------------\nAnimal '{animal.name.capitalize()}' created and added to the Database.\n--------------------------------------------------")
 
-    # this Creates a set to keep track of the selected foods for this animal
+    # this Creates a set to keep track of the selected foods for this animal ---- this is where I have to figure out how to add  ---> selected_foods = {food.id: "not supported" for food in Food.get_all_food()}
     selected_foods = set()
 
     # this sweet sweet baby allows you to add foods to the animal
@@ -64,7 +64,7 @@ def create_animal():
         # here is the break that ends the process if done
         if food_name == 'done' or not food_name:
             
-            done_setup = input(f"------------------------------------------------------------\nAre you sure you're done setting up '{name}'? (yes/no): \n------------------------------------------------------------\nResponse: ").strip().lower()
+            done_setup = input(f"\n------------------------------------------------------------\nAre you sure you're done setting up '{name}'? (yes/no): \n------------------------------------------------------------\n\nResponse: ").strip().lower()
             if done_setup == 'yes':
                 print(f"\n---------------------------------------\nAnimal '{animal.name.capitalize()}' setup is complete.\n---------------------------------------")
                 break
