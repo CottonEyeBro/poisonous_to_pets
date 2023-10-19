@@ -94,42 +94,7 @@ def create_animal():
                     selected_foods.add(food.id) # heres where we add it
                     print(f"\n------------------------------------------------------------------------------\n'{food.name}' added to '{animal.name}' as {'safe' if is_safe == 'true' else 'unsafe'} food.\n------------------------------------------------------------------------------") # my happy confirmed message
 
-   
 
-
-
-
-
-
-
-
-
-
-
-
-
-# def create_animal():
-#     name = input("Enter animal name: ").strip().lower()
-#     # Input validation: make damn sure the name is not empty.
-#     if not name:
-#         return
-    
-#     if name == "cooper":
-#         print(f"------------------------------------------------------------\n <!> CATUION <!> \n------------------------------------------------------------ \n We do not allow 'Coopers' \n------------------------------------------------------------ \n'Cooper' cannot be added to the database. Creation canceled.\n------------------------------------------------------------")
-#         return
-#     # Fetch the list of existing animals
-#     existing_animals = [animal.name.lower() for animal in Animal.get_all_animal()]
-#     if name in existing_animals:
-#         print(f"------------------------------------------------------------\nAnimal '{name.capitalize()}' already exists in the database. Creation canceled.\n------------------------------------------------------------")
-#         return
-
-#     # confirmation
-#     confirmation = input(f"---------------------------------------------------------------------\nAre you sure you want to add '{name.capitalize()}' to the database? (yes/no):\n---------------------------------------------------------------------\nResponse: ").strip().lower()
-#     if confirmation == "yes":
-#         animal = Animal.create(name)
-#         print(f"---------------------------------------------------\nAnimal '{animal.name.capitalize()}' created and added to the Database.\n---------------------------------------------------")
-#     else:
-#         print(f"-----------------------------\n <!> Add '{name.capitalize()}' was canceled. <!> \n-----------------------------")
 
 
 
