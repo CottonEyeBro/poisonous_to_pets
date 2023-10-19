@@ -49,7 +49,7 @@ def create_animal():
 
     # this Creates a new animal instance
     animal = Animal.create(name)
-    print(f"Animal '{animal.name.capitalize()}' created and added to the Database.")
+    print(f"--------------------------------------------------\nAnimal '{animal.name.capitalize()}' created and added to the Database.\n--------------------------------------------------")
 
     # this Creates a set to keep track of the selected foods for this animal
     selected_foods = set()
