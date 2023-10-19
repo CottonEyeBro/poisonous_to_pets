@@ -2,6 +2,7 @@
 from models.Animal import Animal
 from models.AnimalFood import AnimalFood
 from models.Food import Food
+from figures import web_m_dumper
 
 # Delete row of Animal table by name attribute
 def delete_animal():
@@ -46,8 +47,8 @@ def list_animals():
 def web_md():
     response = input("Are you sure that you would like to check WebMD? [yes/no]")
     if response == "yes":
-        print("It's probably cancer.")
-        return
+        print("BeeYoop BeeDeepBoom Weeop DEEpaEEya... It's probably cancer.\n")
+        return web_m_dumper()
     else:
         return
 

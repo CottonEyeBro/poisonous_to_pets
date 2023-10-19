@@ -1,6 +1,6 @@
 # lib/cli.py
 from seed import Animal, AnimalFood, Food
-
+from figures import main_menu_img
 from helpers import (
     exit_program,
     delete_animal,
@@ -11,6 +11,7 @@ from helpers import (
 )
 
 def main():
+    main_menu_img()
     while True:
         # from models.AnimalFood import AnimalFood
         # print(AnimalFood.all)
