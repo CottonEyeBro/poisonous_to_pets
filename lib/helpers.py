@@ -30,10 +30,6 @@ def create_animal():
     animal = Animal.create(name.lower().strip())
     print(f"Animal '{animal.name}' created.")
 
-def exit_program():
-    print("Goodbye!")
-    exit()
-
 # Get all names from 'foods' table
 def list_foods():
     foods = Food.get_all_food()
@@ -46,3 +42,15 @@ def list_animals():
     for animal in animals:
         print(animal.name)
 
+# WebMD results
+def web_md():
+    response = input("Are you sure that you would like to check WebMD? [yes/no]")
+    if response == "yes":
+        print("It's probably cancer.")
+        return
+    else:
+        return
+
+def exit_program():
+    print("Goodbye!")
+    exit()
