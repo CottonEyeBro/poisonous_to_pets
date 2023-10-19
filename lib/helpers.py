@@ -35,31 +35,101 @@ def exit_program():
 
 
 
-
-
-
 def create_animal():
     name = input("Enter animal name: ").strip().lower()
-    # Input validation: make damn sure the name is not empty.
+    # Here I make darn sure the name is not empty
     if not name:
         return
-    
-    if name == "cooper":
-        print(f"------------------------------------------------------------\n <!> CATUION <!> \n------------------------------------------------------------ \n We do not allow 'Coopers' \n------------------------------------------------------------ \n'Cooper' cannot be added to the database. Creation canceled.\n------------------------------------------------------------")
-        return
-    # Fetch the list of existing animals
+
+    # here I Fetch the list of existing animals
     existing_animals = [animal.name.lower() for animal in Animal.get_all_animal()]
     if name in existing_animals:
-        print(f"------------------------------------------------------------\nAnimal '{name.capitalize()}' already exists in the database. Creation canceled.\n------------------------------------------------------------")
+        print(f"Animal '{name.capitalize()}' already exists in the database. Creation canceled.")
         return
 
-    # confirmation
-    confirmation = input(f"---------------------------------------------------------------------\nAre you sure you want to add '{name.capitalize()}' to the database? (yes/no):\n---------------------------------------------------------------------\nResponse: ").strip().lower()
-    if confirmation == "yes":
-        animal = Animal.create(name)
-        print(f"---------------------------------------------------\nAnimal '{animal.name.capitalize()}' created and added to the Database.\n---------------------------------------------------")
-    else:
-        print(f"-----------------------------\n <!> Add '{name.capitalize()}' was canceled. <!> \n-----------------------------")
+    # this Creates a new animal instance
+    animal = Animal.create(name)
+    print(f"Animal '{animal.name.capitalize()}' created and added to the Database.")
+
+    # this Creates a set to keep track of the selected foods for this animal
+    selected_foods = set()
+
+    # this sweet sweet baby allows you to add foods to the animal
+    while True:
+        print(f"\nSelect a food from the list to add to '{name}' (type 'done' or press 'enter' to finish):\n")
+        list_foods()
+
+        food_name = input("\nFood name: ").strip().lower()
+
+        # here is the break that ends the process if done
+        if food_name == 'done' or not food_name:
+            
+            done_setup = input(f"Are you sure you're done setting up '{name}'? (yes/no): ").strip().lower()
+            if done_setup == 'yes':
+                print(f"\nAnimal '{animal.name.capitalize()}' setup is complete.")
+                break
+        elif food_name == 'no':
+            print(f"Setup for '{name}' continues. Add more foods.")
+            continue
+
+
+
+        # having a slight issue where if you press enter and then follow up with no I am getting below error message regardless of working ---
+        # this is where I Check if the food exists in the database
+        food = Food.find_by_name(food_name)
+        if not food:
+            print(f"\nFood '{food_name}' not found in the database.\n Please add the food to the database first.")
+        else:
+            # Check if the food is already added to this animal because why not
+            if food.id in selected_foods:
+                print(f"-------------------------------------------------\n <!> '{food.name}' is already added to '{animal.name}'. <!> \n-------------------------------------------------")
+            else:
+
+                # Create an AnimalFood instance to associate the food with the animal and voila!!!!!
+                is_safe = input(f"Is '{food.name}' safe for '{animal.name}'? (true/false): ").strip().lower()
+                if is_safe not in ['true', 'false']:
+                    print("-------------------------------------------------\n <!><!> Invalid input. Please enter 'true' or 'false. <!><!> \n-------------------------------------------------")
+                else:
+                    AnimalFood.create(animal.id, food.id, is_safe) # here is the creation
+                    selected_foods.add(food.id) # heres where we add it
+                    print(f"\n'{food.name}' added to '{animal.name}' as {'safe' if is_safe == 'true' else 'unsafe'} food.") # my happy confirmed message
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+# def create_animal():
+#     name = input("Enter animal name: ").strip().lower()
+#     # Input validation: make damn sure the name is not empty.
+#     if not name:
+#         return
+    
+#     if name == "cooper":
+#         print(f"------------------------------------------------------------\n <!> CATUION <!> \n------------------------------------------------------------ \n We do not allow 'Coopers' \n------------------------------------------------------------ \n'Cooper' cannot be added to the database. Creation canceled.\n------------------------------------------------------------")
+#         return
+#     # Fetch the list of existing animals
+#     existing_animals = [animal.name.lower() for animal in Animal.get_all_animal()]
+#     if name in existing_animals:
+#         print(f"------------------------------------------------------------\nAnimal '{name.capitalize()}' already exists in the database. Creation canceled.\n------------------------------------------------------------")
+#         return
+
+#     # confirmation
+#     confirmation = input(f"---------------------------------------------------------------------\nAre you sure you want to add '{name.capitalize()}' to the database? (yes/no):\n---------------------------------------------------------------------\nResponse: ").strip().lower()
+#     if confirmation == "yes":
+#         animal = Animal.create(name)
+#         print(f"---------------------------------------------------\nAnimal '{animal.name.capitalize()}' created and added to the Database.\n---------------------------------------------------")
+#     else:
+#         print(f"-----------------------------\n <!> Add '{name.capitalize()}' was canceled. <!> \n-----------------------------")
 
 
 
