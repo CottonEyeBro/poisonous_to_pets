@@ -16,7 +16,7 @@ class Animal:
         if isinstance(name, str) and 1 <= len(name):
             self._name = name
         else:
-            raise Exception
+            raise Exception ("Please write a name")
     
     @classmethod
     def create_table(cls):
@@ -53,12 +53,19 @@ class Animal:
         self.id = CURSOR.lastrowid
         type(self).all[self.id] = self
 
+
+
+
     @classmethod
     def create(cls, name):
         """ Initialize a new Animal instance and save the object to the database """
         animal = cls(name)
         animal.save()
         return animal
+
+
+
+
 
 
     ### DELETE ###
@@ -78,6 +85,10 @@ class Animal:
             ids.append(tupl[0])
         return ids
 
+
+
+
+
     def delete_animal_foods(self, id):
         """Delete each row where an animal occurs in the AnimalsFoods table"""
         sql = """
@@ -86,6 +97,11 @@ class Animal:
         """
         CURSOR.execute(sql, (id,))
         CONN.commit()
+
+
+
+
+
 
     @classmethod
     def instance_from_db(cls, row):

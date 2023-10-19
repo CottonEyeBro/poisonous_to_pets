@@ -23,22 +23,22 @@ def main():
         elif choice == "2":
             delete_animal()
         elif choice == "3":
-            list_foods()
-        elif choice == "4":
-            list_animals()
-        elif choice == "5":
             update_animal_name()
+        elif choice == "4":
+            list_foods()
+        elif choice == "5":
+            list_animals()
         else:
-            print("Invalid choice")
+            print("----------------\n <!> Invalid choice <!> \n----------------")
 
 def menu():
-    print("Please select an option:")
-    print("0. Exit the program")
+    print("\n\n--- Please select an option ---\n")
+    print("0. Exit le program")
     print("1. Add a new animal")
-    print("2. Delete animal")
-    print("3. List all currently supported foods from database")
-    print("4. List all currently supported animals from database")
-    print("5. Update an animal's name")
+    print("2. Delete an animal")
+    print("3. Update an animal's name")
+    print("4. List all currently supported foods from database")
+    print("5. List all currently supported animals from database")
 
 if __name__ == "__main__":
     main()
