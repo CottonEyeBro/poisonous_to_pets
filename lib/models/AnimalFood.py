@@ -10,16 +10,6 @@ class AnimalFood:
         self.fk_food = fk_food
         self.is_safe = is_safe #must be a string of true or false
 
-    # @property
-    # def name(self):
-    #     return self._name
-    
-    # @name.setter
-    # def name(self, name):
-    #     if isinstance(name, str) and 1 <= len(name):
-    #         self._name = name
-    #     else:
-    #         raise Exception
 
     @property
     def fk_animal(self):
