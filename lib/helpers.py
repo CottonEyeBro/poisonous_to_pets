@@ -350,3 +350,50 @@ def web_md():
         return web_m_dumper()
     else:
         return
+
+
+
+
+
+
+
+
+
+# ----------------------------------------------------------------
+# TEST CODE ---- this is the code I basically ripped some from other code to add change or modify foods
+# need to figure out how to call Jessica's code here to print out list of foods so you know what you're editing
+# ----------------------------------------------------
+
+
+# def update_animal():
+#     animal_name = input("Enter the name of the animal you want to update: ").strip().lower()
+#   #---> this compares against database
+#     animal = Animal.find_by_name(animal_name)
+#     if not animal:
+#         print(f"Animal '{animal_name.capitalize()}' not found in the database.")
+#         return
+#   #---> Need to write the code here
+#     print(f"Current food associations for '{animal_name}':")
+#     # Display current associations
+#
+#     while True:
+#         action = input("Add, remove, or alter_safe Foods (done to finish): ").strip().lower()
+#
+#         if action == 'done':
+#             break
+#         elif action == 'add':
+#             # Add a new food association
+#             food_name = input("Food name: ").strip().lower()
+#             is_safe = input("Is it safe (true/false): ").strip().lower()
+#             # Add to the database
+#         elif action == 'remove':
+#             # Remove a food 
+#             food_name = input("Food name to remove: ").strip().lower()
+#             # Remove from the animal 
+#         elif action == 'alter_safe':
+#        #---> Change whether a food is safe or not
+#             food_name = input("Food name to modify: ").strip().lower()
+#             is_safe = input("Updated safety status (true/false): ").strip().lower()
+#             # Update in the database
+#
+#     print(f"Food associations for '{animal_name}' have been updated.")
