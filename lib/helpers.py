@@ -250,9 +250,10 @@ def update_animal_name():
     while True:
         new_name = input(f"-------------------------------------------\nWhat would you like to switch '{current_name}' to: ")
         # Checks if new_name is an empty string
-        if not new_name.strip():  
-            print("----------------------------------------------------\n!!!>>>>  Please provide a non-empty name.  <<<<!!!")
-        else:
+        if not new_name.strip(): 
+            print("----------------------------------------------------\n!!!>>>>  Please provide a usable name.  <<<<!!!")
+        elif new_name.strip().lower() == "cooper":
+            print(f"------------------------------------------------------------\n <!> CATUION <!> \n------------------------------------------------------------ \n We do not allow 'Coopers' \n------------------------------------------------------------ \n'Cooper' cannot be added to the database. Creation canceled.\n------------------------------------------------------------")
             break
     
     while True:
