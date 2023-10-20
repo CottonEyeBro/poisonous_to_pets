@@ -40,6 +40,10 @@ def create_animal():
     # Here I make darn sure the name is not empty
     if not name:
         return
+    
+    if name == "cooper":
+        print(f"------------------------------------------------------------\n <!> CATUION <!> \n------------------------------------------------------------ \n We do not allow 'Coopers' \n------------------------------------------------------------ \n'Cooper' cannot be added to the database. Creation canceled.\n------------------------------------------------------------")
+        return
 
     # here I Fetch the list of existing animals
     existing_animals = [animal.name.lower() for animal in Animal.get_all_animal()]
