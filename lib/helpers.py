@@ -356,12 +356,18 @@ def unsafe_foods_for_animal():
 
 # WebMD results
 def web_md():
-    response = input("Are you sure that you would like to check WebMD? [yes/no]")
+    response = input("\nAre you sure that you would like to check WebMD? [yes/no]\n\nResponse:")
     if response == "yes":
         print("BeeYoop BeeDeepBoom Weeop DEEpaEEya... It's probably cancer.\n")
-        return web_m_dumper()
+        web_m_dumper()
+        confirmation = input("\n---> press any key to exit....")
+        if not confirmation:
+            return
+    elif response == "no":
+        print("\n---------------------\nSmart Choice\n---------------------")
     else:
-        return
+        print("\n------------------------------------------\n <!> Please Type yes' or 'no' <!> \n------------------------------------------")
+        web_md()
 
 
 
