@@ -10,6 +10,7 @@ from figures import web_m_dumper
 
 
 
+
 # --------------------------------------------------------------
 # Below is the helper to EXIT THE PROGRAM ENTIRELY
 # --------------------------------------------------------------
@@ -242,6 +243,7 @@ def list_animals():
 # --------------------------------------------------------------
 
 def update_animal_name():
+    from cli import main
     current_name = input("----------------------------------------------------\nType the animal whose name you wish to change: ")
     animal = Animal.find_by_name(current_name)
     if not animal:
@@ -252,8 +254,10 @@ def update_animal_name():
         # Checks if new_name is an empty string
         if not new_name.strip(): 
             print("----------------------------------------------------\n!!!>>>>  Please provide a usable name.  <<<<!!!")
-        elif new_name.strip().lower() == "cooper":
+            break
+        if new_name.strip().lower() == "cooper":
             print(f"------------------------------------------------------------\n <!> CATUION <!> \n------------------------------------------------------------ \n We do not allow 'Coopers' \n------------------------------------------------------------ \n'Cooper' cannot be added to the database. Creation canceled.\n------------------------------------------------------------")
+            main()
             break
     
     while True:
