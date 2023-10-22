@@ -1,5 +1,7 @@
 import climage
 
+# FYI THIS is pronouced C- L- image ;)
+
 # Main menu poison sticker
 def main_menu_img():
     # Convert an image to a 50 character wide image.

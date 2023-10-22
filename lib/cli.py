@@ -12,6 +12,7 @@ from helpers import (
     web_md
 )
 
+
 def main():
     main_menu_img()
     while True:
@@ -48,6 +49,7 @@ def menu():
     print("5. List all currently supported animals from database")
     print("6. List all unsafe foods for an animal")
     print("7. Check WebMD")
+
 
 
 if __name__ == "__main__":

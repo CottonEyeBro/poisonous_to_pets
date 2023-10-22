@@ -29,7 +29,6 @@ def exit_program():
 
 
 
-
 # --------------------------------------------------------------
 # Below is the helper to CREAT A NEW ANIMAL
 # --------------------------------------------------------------
@@ -85,12 +84,12 @@ def create_animal():
         if not food:
             print(f"\nFood '{food_name}' not found in the database.\n Please add the food to the database first.")
         else:
-            # Check if the food is already added to this animal because why not
+            # Checks if the food is already added to this animal because why not
             if food.id in selected_foods:
                 print(f"-------------------------------------------------\n <!> '{food.name}' is already added to '{animal.name}'. <!> \n-------------------------------------------------")
             else:
 
-                # Create an AnimalFood instance to associate the food with the animal and voila!!!!!
+                # Creates an AnimalFood instance to associate the food with the animal and voila!!!!!
                 is_safe = input(f"Is '{food.name}' safe for '{animal.name}'? (true/false): ").strip().lower()
                 if is_safe not in ['true', 'false']:
                     print("-------------------------------------------------\n <!><!> Invalid input. Please enter 'true' or 'false. <!><!> \n-------------------------------------------------")
@@ -243,7 +242,7 @@ def list_animals():
 # --------------------------------------------------------------
 
 def update_animal_name():
-    from cli import main
+    from cli import main # ---> here Im importing main from CLI so I can kill my function and send it back to menu upon cooper code
     current_name = input("----------------------------------------------------\nType the animal whose name you wish to change: ")
     animal = Animal.find_by_name(current_name)
     if not animal:
@@ -292,16 +291,20 @@ def update_animal_name():
 
 
 def unsafe_foods_for_animal():
+    from cli import menu
     #ask for a species
-    animal_name = input("\n\nWhich animal would you like to check: ")
+    list_animals() #  ----->  hey jess I added this here for functionality -CO
+    animal_name = input("\n----------------------------------------------\nWhich animal would you like to check \n----------------------------------------------\n(enter '1' to return to menu):\n\n> ")
     # print(animal_name)
 
     #get the id of the species from animal table
     animal = Animal.find_by_name(animal_name)
     # print(animal)
-    if not animal:
-        print(f"Animal '{animal_name}' not found")
+    if animal_name == "1":
         return
+    elif not animal:
+        print(f"Animal '{animal_name}' not found")
+        unsafe_foods_for_animal()
     
     #get all animal_foods ids for that animal
     all_ids = animal.animal_foods_ids() #returns a list of ids
@@ -375,19 +378,21 @@ def web_md():
 
 
 # def update_animal():
+#     list_animals() # this shows whole list of animals
 #     animal_name = input("Enter the name of the animal you want to update: ").strip().lower()
 #   #---> this compares against database
 #     animal = Animal.find_by_name(animal_name)
 #     if not animal:
 #         print(f"Animal '{animal_name.capitalize()}' not found in the database.")
 #         return
-#   #---> Need to write the code here
+  
 #     print(f"Current food associations for '{animal_name}':")
 #     # Display current associations
-#
+
 #     while True:
+#         #---> Need to write the code here to display ALL FOODS ASSOCIATED WITH animal
 #         action = input("Add, remove, or alter_safe Foods (done to finish): ").strip().lower()
-#
+
 #         if action == 'done':
 #             break
 #         elif action == 'add':
@@ -404,5 +409,5 @@ def web_md():
 #             food_name = input("Food name to modify: ").strip().lower()
 #             is_safe = input("Updated safety status (true/false): ").strip().lower()
 #             # Update in the database
-#
+
 #     print(f"Food associations for '{animal_name}' have been updated.")
