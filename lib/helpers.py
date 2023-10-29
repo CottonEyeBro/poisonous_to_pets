@@ -36,7 +36,7 @@ def exit_program():
 
 
 def create_animal():
-    name = input("Enter animal name: ").strip().lower()
+    name = input("Enter New animal name: ").strip().lower()
     # Here I make darn sure the name is not empty
     if not name:
         return
@@ -72,9 +72,9 @@ def create_animal():
             if done_setup == 'yes':
                 print(f"\n---------------------------------------\nAnimal '{animal.name.capitalize()}' setup is complete.\n---------------------------------------")
                 break
-        elif food_name == 'no':
-            print(f"Setup for '{name}' continues. Add more foods.")
-            continue
+            elif food_name == 'no':
+                print(f"Setup for '{name}' continues. Add more foods.")
+                continue
 
 
 
@@ -215,7 +215,7 @@ def list_foods():
 # --------------------------------------------------------------
 
 def list_animals():
-    print("--------------\nSpecies List:\n--------------")
+    print("\n--------------\nSpecies List:\n--------------")
     animals = Animal.get_all_animal()
 
     # Extracted animal names and sorted them within the list_animals function
@@ -243,6 +243,7 @@ def list_animals():
 
 def update_animal_name():
     from cli import main # ---> here Im importing main from CLI so I can kill my function and send it back to menu upon cooper code
+    list_animals()
     current_name = input("----------------------------------------------------\nType the animal whose name you wish to change: ")
     animal = Animal.find_by_name(current_name)
     if not animal:
@@ -273,7 +274,36 @@ def update_animal_name():
 
 
 
+# def update_animal_name():
+#     from cli import main # ---> here Im importing main from CLI so I can kill my function and send it back to menu upon cooper code
+#     list_animals()
+#     current_name = input("----------------------------------------------------\nType the animal whose name you wish to change: ")
+#     animal = Animal.find_by_name(current_name)
+#     if not animal:
+#         print(f"----------------------------\n <!> Animal '{current_name}' not found <!> \n----------------------------")
+#         return
+    
+#     new_name = input(f"-------------------------------------------\nWhat would you like to switch '{current_name}' to: ")
+#     # Checks if new_name is an empty string
+#     if not new_name.strip(): 
+#         print("----------------------------------------------------\n!!!>>>>  Please provide a usable name.  <<<<!!!")
+#         return
+#     if new_name.strip().lower() == "cooper":
+#         print(f"------------------------------------------------------------\n <!> CATUION <!> \n------------------------------------------------------------ \n We do not allow 'Coopers' \n------------------------------------------------------------ \n'Cooper' cannot be added to the database. Creation canceled.\n------------------------------------------------------------")
+#         main()
+#         return
 
+#     while True:
+#         confirmation = input(f"-----------------------------------------\nDo you want to update '{current_name}' to '{new_name}'? (yes/no)\n-----------------------------------------\nResponse: ").strip().lower()
+#         if confirmation == "yes":
+#             animal.update(new_name)
+#             print(f"--------------------------------------------------\nThe name of animal '{current_name}' has been updated to '{new_name}'\n--------------------------------------------------")
+#             break
+#         elif confirmation == "no":
+#             print(f"------------------------------------\n <!> Update '{current_name}' name canceled. <!> \n------------------------------------\n\n")
+#             break
+#         else:
+#             print("------------------------------------\n!!!>>>>  Please Confirm (yes/no).  <<<<!!!")
 
 
 
@@ -287,59 +317,131 @@ def update_animal_name():
 
 
 
-
-
-
 def unsafe_foods_for_animal():
-    from cli import menu
-    #ask for a species
-    list_animals() #  ----->  hey jess I added this here for functionality -CO
-    animal_name = input("\n----------------------------------------------\nWhich animal would you like to check \n----------------------------------------------\n(enter '1' to return to menu):\n\n> ")
-    # print(animal_name)
-
-    #get the id of the species from animal table
-    animal = Animal.find_by_name(animal_name)
-    # print(animal)
-    if animal_name == "1":
-        return
-    elif not animal:
-        print(f"Animal '{animal_name}' not found")
-        unsafe_foods_for_animal()
     
-    #get all animal_foods ids for that animal
-    all_ids = animal.animal_foods_ids() #returns a list of ids
-    # print(all_ids)
+    while True:
+        list_animals() # This shows list of animals for user to choose from
+        animal_name = input("\n----------------------------------------------\nWhich animal would you like to check \n----------------------------------------------\n(enter '1' to return to menu):\n\n> ")
+        
+        if animal_name == "1": # <---- this will return to main menu
+            return
+        
+        animal = Animal.find_by_name(animal_name)
+        
+        if not animal:
+            print(f"Animal '{animal_name}' not found")
+            continue
 
-    #get all fk_foods ids where isSafe == false
-    unsafe = []
-    for id in all_ids:
-        animal_food = AnimalFood.find_unsafe_by_id(id)
-        if animal_food != None:
-            unsafe.append(animal_food)
-    # print(unsafe)
+        unsafe_foods = []
+        for animal_food_id in animal.animal_foods_ids():
+            animal_food = AnimalFood.find_unsafe_by_id(animal_food_id)
+            if animal_food:
+                food = Food.find_by_id(animal_food.fk_food)
+                if food:
+                    unsafe_foods.append(food.name)
 
-    #iterate through AnimalFood objects and return a list of their fk_food values
-    fk_food_values = []
-    for af_object in unsafe:
-        fk = af_object.fk_food
-        fk_food_values.append(fk)
-    # print(fk_food_values)
+        unsafe_foods.sort()
 
-    #iterate over list to return foods table names for each id
-    food_names = []
-    for id in fk_food_values:
-        food_obj = Food.find_by_id(id)
-        name = food_obj.name
-        food_names.append(name)
-    # print(food_names)
+        if unsafe_foods:
+            print(f"\n------------------------\nUnsafe Foods for '{animal_name}':\n------------------------")
+            for name in unsafe_foods:
+                print(f"- {name}")
+        else:
+            print(f"No unsafe foods found for '{animal_name}'")
 
-    #alphabetize the names
-    sorted_names = sorted(food_names)
+        another_animal = input("\nDo you want to check another animal? (y/n): ")
+        if another_animal.lower() != "y":
+            return
 
-    #print the names
-    print(f"\n------------------------\nUnsafe Foods for '{animal_name}':\n------------------------")
-    for name in sorted_names:
-        print(f"- {name}")
+
+#----------------------------------------
+# My first rewrite attempt below
+#----------------------------------------
+
+# def unsafe_foods_for_animal():
+#     list_animals()
+#     animal_name = input("\n----------------------------------------------\nWhich animal would you like to check \n----------------------------------------------\n(enter '1' to return to menu):\n\n> ")
+    
+#     if animal_name == "1":
+#         return
+    
+#     animal = Animal.find_by_name(animal_name)
+    
+#     if not animal:
+#         print(f"Animal '{animal_name}' not found")
+#         return
+
+#     unsafe_foods = []
+#     for animal_food in [AnimalFood.find_unsafe_by_id(id) for id in animal.animal_foods_ids()]:
+#         if animal_food:
+#             food = Food.find_by_id(animal_food.fk_food)
+#             if food:
+#                 unsafe_foods.append(food.name)
+
+#     unsafe_foods.sort()
+
+#     if unsafe_foods:
+#         print(f"\n------------------------\nUnsafe Foods for '{animal_name}':\n------------------------")
+#         for name in unsafe_foods:
+#             print(f"- {name}")
+#     else:
+#         print(f"No unsafe foods found for '{animal_name}'")
+
+# ------------------------------------
+# Jessica's code below
+# ------------------------------------
+
+# def unsafe_foods_for_animal():
+#     from cli import menu
+#     #ask for a species
+#     list_animals() #  ----->  hey jess I added this here for functionality -CO
+#     animal_name = input("\n----------------------------------------------\nWhich animal would you like to check \n----------------------------------------------\n(enter '1' to return to menu):\n\n> ")
+#     # print(animal_name)
+
+#     #get the id of the species from animal table
+#     animal = Animal.find_by_name(animal_name)
+#     # print(animal)
+#     if animal_name == "1":
+#         return
+#     elif not animal:
+#         print(f"Animal '{animal_name}' not found")
+#         unsafe_foods_for_animal()
+    
+#     #get all animal_foods ids for that animal
+#     all_ids = animal.animal_foods_ids() #returns a list of ids
+#     # print(all_ids)
+
+#     #get all fk_foods ids where isSafe == false
+#     unsafe = []
+#     for id in all_ids:
+#         animal_food = AnimalFood.find_unsafe_by_id(id)
+#         if animal_food != None:
+#             unsafe.append(animal_food)
+#     # print(unsafe)
+
+#     #iterate through AnimalFood objects and return a list of their fk_food values
+#     fk_food_values = []
+#     for af_object in unsafe:
+#         fk = af_object.fk_food
+#         fk_food_values.append(fk)
+#     # print(fk_food_values)
+
+#     #iterate over list to return foods table names for each id
+#     food_names = []
+#     for id in fk_food_values:
+#         food_obj = Food.find_by_id(id)
+#         name = food_obj.name
+#         food_names.append(name)
+#     # print(food_names)
+
+#     #alphabetize the names
+#     sorted_names = sorted(food_names)
+
+#     #print the names
+#     print(f"\n------------------------\nUnsafe Foods for '{animal_name}':\n------------------------")
+#     for name in sorted_names:
+#         print(f"- {name}")
+
 
 
 
@@ -378,42 +480,132 @@ def web_md():
 
 
 # ----------------------------------------------------------------
-# TEST CODE ---- this is the code I basically ripped some from other code to add change or modify foods
+# TEST CODE ---- this is the code to add change or modify foods
 # need to figure out how to call Jessica's code here to print out list of foods so you know what you're editing
 # ----------------------------------------------------
 
 
-# def update_animal():
-#     list_animals() # this shows whole list of animals
-#     animal_name = input("Enter the name of the animal you want to update: ").strip().lower()
-#   #---> this compares against database
+def update_animal():
+    list_animals() # this shows whole list of animals
+    animal_name = input("Enter the name of the animal you want to update: ").strip().lower()
+  #---> this compares against database
+    animal = Animal.find_by_name(animal_name)
+    if not animal:
+        print(f"Animal '{animal_name.capitalize()}' not found in the database.")
+        return
+  
+    print(f"Current food associations for '{animal_name}':") # Displays current associations
+    show_animal_foods(animal_name)
+
+    while True:
+        action = input("Add, remove, or alter_safe Foods (done to finish): ").strip().lower()
+
+        if action == 'done':
+            break
+        elif action == 'add':
+            # Add a new food association
+            food_name = input("Food name: ").strip().lower()
+            is_safe = input("Is it safe (true/false): ").strip().lower()
+            # Add to the database
+        elif action == 'remove':
+            # Remove a food 
+            food_name = input("Food name to remove: ").strip().lower()
+            # Remove from the animal 
+        elif action == 'alter_safe':
+       #---> Change whether a food is safe or not
+            food_name = input("Food name to modify: ").strip().lower()
+            is_safe = input("Updated safety status (true/false): ").strip().lower()
+            # Update in the database
+
+    print(f"Food associations for '{animal_name}' have been updated.")
+
+
+
+# ---------------------------------------------------------------------------------------------------
+# TEST CODE ---- This is code to show all foods for an animal and then present the as not supported, safe or not safe
+# ----------------------------------------------------------------------------------------------------
+
+def show_animal_foods(animal_name):
+    animal = Animal.find_by_name(animal_name)
+    if animal:
+        animal_foods = AnimalFood.find_by_animal(animal)
+        print(f"Foods associated with '{animal_name}':")
+        for animal_food in animal_foods:
+            food = Food.find_by_id(animal_food.food_id)
+            safety_status = "safe" if animal_food.is_safe == "true" else "not safe"
+            print(f"{food.name}: {safety_status}")
+    else:
+        print(f"Animal '{animal_name.capitalize()}' not found in the database.")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# def show_animal_foods(animal_name):
 #     animal = Animal.find_by_name(animal_name)
 #     if not animal:
-#         print(f"Animal '{animal_name.capitalize()}' not found in the database.")
+#         print(f"Animal '{animal_name}' not found.")
 #         return
-  
-#     print(f"Current food associations for '{animal_name}':")
-#     # Display current associations
 
-#     while True:
-#         #---> Need to write the code here to display ALL FOODS ASSOCIATED WITH animal
-#         action = input("Add, remove, or alter_safe Foods (done to finish): ").strip().lower()
 
-#         if action == 'done':
-#             break
-#         elif action == 'add':
-#             # Add a new food association
-#             food_name = input("Food name: ").strip().lower()
-#             is_safe = input("Is it safe (true/false): ").strip().lower()
-#             # Add to the database
-#         elif action == 'remove':
-#             # Remove a food 
-#             food_name = input("Food name to remove: ").strip().lower()
-#             # Remove from the animal 
-#         elif action == 'alter_safe':
-#        #---> Change whether a food is safe or not
-#             food_name = input("Food name to modify: ").strip().lower()
-#             is_safe = input("Updated safety status (true/false): ").strip().lower()
-#             # Update in the database
+#     animal_foods = AnimalFood.find_by_animal(animal.id)
+#     if animal_foods is None:
+#         print(f"No food associations found for '{animal_name}'.")
+#         return
+#     print(f"Foods associated with '{animal_name}':")
 
-#     print(f"Food associations for '{animal_name}' have been updated.")
+#     for animal_food in animal_foods:
+#         food = Food.find_by_id(animal_food.fk_food)
+#         if food:
+#             food_name = food.name
+#             is_safe = animal_food.is_safe
+#             if is_safe is None:
+#                 print(f"Food: {food_name}, Safety: Not Supported")
+#             else:
+#                 print(f"Food: {food_name}, Safety: {is_safe}")
+#         else:
+#             print("Food not found for this association.")
+
+
+
+# def show_foods_for_animal():
+#     list_animals()
+#     animal_name = input("\n----------------------------------------------\nWhich animal's foods would you like to check? \n----------------------------------------------\n(enter '1' to return to the menu):\n\n> ")
+
+#     if animal_name == "1":
+#         return
+
+#     animal = Animal.find_by_name(animal_name)
+
+#     if not animal:
+#         print(f"Animal '{animal_name}' not found")
+#         return
+
+#     animal_foods = []
+#     for animal_food_id in animal.animal_foods_ids():
+#         animal_food = AnimalFood.find_by_id(animal_food_id)
+#         if animal_food:
+#             food = Food.find_by_id(animal_food.fk_food)
+#             if food:
+#                 is_safe = "Safe" if animal_food.is_safe == "true" else "Unsafe"
+#                 animal_foods.append((food.name, is_safe))
+
+#     if animal_foods:
+#         print(f"\n------------------------\nFoods for '{animal_name}':\n------------------------")
+#         for food, is_safe in animal_foods:
+#             print(f"- {food} ({is_safe})")
+#     else:
+#         print(f"No foods found for '{animal_name}'")
+
+#     another_animal = input("Do you want to check another animal? (y/n): ")
+#     if another_animal.lower() != "y":
+#         return

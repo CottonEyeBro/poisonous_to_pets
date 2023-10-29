@@ -8,7 +8,7 @@ class AnimalFood:
         self.id = id
         self.fk_animal = fk_animal
         self.fk_food = fk_food
-        self.is_safe = is_safe #must be a string of true or false
+        self.is_safe = is_safe # must be a string of true or false
 
 
     @property
@@ -90,10 +90,35 @@ class AnimalFood:
         animal_food.save()
         return animal_food
 
+
+    
+    # @classmethod
+    # def instance_from_db(cls, row):
+    #     """Return an AnimalFood object having the attribute values from the table row."""
+
+    #     if row and len(row) >= 4:  # Check if row contains at least 4 elements
+    #         # Check the dictionary for an existing instance using the row's primary key
+    #         animal_food = cls.all.get(row[1])
+    #         if animal_food:
+    #             # Update the attributes
+    #             animal_food.is_safe = row[0]
+    #             animal_food.fk_animal = row[2]
+    #             animal_food.fk_food = row[3]
+    #         else:
+    #             # If not found, create a new instance
+    #             animal_food = cls(row[1], row[2], row[3])
+    #             cls.all[animal_food.fk_food] = animal_food
+    #         return animal_food
+    #     else:
+    #         print("Invalid row:", row)
+    #         return None
+
+
+
     @classmethod
     def instance_from_db(cls, row):
         """Return an AnimalFood object having the attribute values from the table row."""
-
+        print("Row:", row) 
         # Check the dictionary for an existing instance using the row's primary key
         animal_food = cls.all.get(row[1])
         if animal_food:
@@ -104,6 +129,20 @@ class AnimalFood:
         else:
             print("animal not found")
         return animal_food
+    
+    @classmethod
+    def find_by_animal(cls, animal_name):
+        from models.Animal import Animal
+        """
+        Find and return all food associations for a specific animal by its name.
+        """
+        animal = Animal.find_by_name(animal_name)
+        if animal:
+            CURSOR.execute("SELECT * FROM animals_foods WHERE id = ?", (animal.id,))
+            rows = CURSOR.fetchall()
+            return [cls(*row) for row in rows]
+        else:
+            return []
 
     @classmethod
     def find_by_id(cls, id):

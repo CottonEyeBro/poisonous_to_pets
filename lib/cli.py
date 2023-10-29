@@ -9,7 +9,8 @@ from helpers import (
     list_animals, 
     unsafe_foods_for_animal,
     update_animal_name,
-    web_md
+    web_md,
+    update_animal
 )
 
 
@@ -35,6 +36,8 @@ def main():
         elif choice == "6":
             unsafe_foods_for_animal()
         elif choice == "7":
+            update_animal()
+        elif choice == "8":
             web_md()
         else:
             print("----------------\n <!> Invalid choice <!> \n----------------")
@@ -48,7 +51,8 @@ def menu():
     print("4. List all currently supported foods from database")
     print("5. List all currently supported animals from database")
     print("6. List all unsafe foods for an animal")
-    print("7. Check WebMD")
+    print("7. Add/Update/Delete Animal's Food List")
+    print("8. Check WebMD")
 
 
 
